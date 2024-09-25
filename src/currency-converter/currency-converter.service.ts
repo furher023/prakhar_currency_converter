@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CurrencyCodes } from '../shared/enums/currency-codes.enums';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CurrencyConverterService {
-
+    constructor(
+        private readonly configService: ConfigService 
+    ) {}
     // converts the amount from a base to a target currency
     public async convertAmount({ amount, base, target }: { amount: number, base: CurrencyCodes, target: CurrencyCodes }): Promise<number>{
-        const conversionRate = await this.getConversionRate({ base, target, apiKey: "get from config"});
+        const conversionRate = await this.getConversionRate({ base, target, apiKey: this.configService.get('EXCHANGE_RATE_API_KEY') });
         return amount*conversionRate;
     }
 
