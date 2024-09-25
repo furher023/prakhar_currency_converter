@@ -1,0 +1,38 @@
+@startuml
+class BillService {
+    -CurrencyConverterService currencyConverterService
+    -ConfigService configService
+    +calculate(billDetails: CalculateBillRequestDto): Promise<CalculateBillResponse>
+    -getPercentDiscount(userType: UserTypes, tenure: Number): Number
+    -getFixedDiscount(amount: Number, base: CurrencyCodes): Promise<Number>
+    -calculatePercentDiscountAmount(items: Array<BillItems>, excludedCategories: Array<BillItemsCategory>, discountPercent: Number): Number
+    -getPercentDiscountExcludedCategries(): Array<BillItemsCategory>
+}
+
+class BillController {
+    -BillService billService
+    +calculateBill(billDetails: CalculateBillRequestDto): Promise<CalculateBillResponseDto>
+}
+
+class CurrencyConverterService {
+    -ConfigService configService
+    +convertAmount({ amount, base, target }: { amount: Number, base: CurrencyCodes, target: CurrencyCodes }): Promise<Number>
+    +getConversionRate({ base, target, apiKey }: { base: CurrencyCodes, target: CurrencyCodes, apiKey: String }): Promise<Number>
+}
+
+class ConfigService {
+    +get(key: String): String
+}
+
+class ApiKeyGuard {
+    -ConfigService configService
+    +canActivate(context: ExecutionContext): boolean
+}
+
+BillService --> CurrencyConverterService : uses
+BillService --> ConfigService : uses
+BillController --> BillService : uses
+BillController --> ApiKeyGuard : uses
+CurrencyConverterService --> ConfigService : uses
+ApiKeyGuard --> ConfigService : uses
+@enduml
