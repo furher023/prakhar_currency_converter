@@ -29,7 +29,7 @@ npm run start:dev
 ## Running Tests
 To run the tests, use:
 ```sh
-npm test
+npm run test
 ```
 
 ## Checking Test Coverage
