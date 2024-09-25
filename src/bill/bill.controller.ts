@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
+import { BillService } from './bill.service';
 
-@Controller('bill')
-export class BillController {}
+@Controller('api')
+export class BillController {
+    constructor(private billService: BillService){}
+
+    @Post('calculate')
+    async calculateBill(){
+        return this.billService.calculate();
+    }
+}
