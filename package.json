@@ -74,9 +74,9 @@
     "testEnvironment": "node"
   },
   "sonar": {
-    "sonar.projectKey": "",
-    "sonar.organization": "",
-    "sonar.projectName": "Your Project Name",
+    "sonar.projectKey": "currency-converter_currency-converter",
+    "sonar.organization": "currency-converter",
+    "sonar.projectName": "currency_converter_prakhar",
     "sonar.projectVersion": "1.0",
     "sonar.sources": "src",
     "sonar.sourceEncoding": "UTF-8"

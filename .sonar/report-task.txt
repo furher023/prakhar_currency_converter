@@ -1,0 +1,7 @@
+organization=currency-converter
+projectKey=currency-converter_currency-converter
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.56719
+dashboardUrl=https://sonarcloud.io/dashboard?id=currency-converter_currency-converter
+ceTaskId=AZIoA8_rTW5KhCmSOZ4a
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZIoA8_rTW5KhCmSOZ4a
