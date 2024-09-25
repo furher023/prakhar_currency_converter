@@ -46,22 +46,21 @@ This will generate a coverage report in the `coverage` directory. Open `index.ht
     ```sh
     export SONAR_TOKEN=your_sonarcloud_token
     ```
-4. Modify the sonar project details in package.json. Replace the projectKey and organization with your sonarcloud deatils.
+3. Install the SonarQube Scanner for npm:
     ```sh
-    "sonar": {
-    "sonar.projectKey": "currency-converter_currency-converter",
-    "sonar.organization": "currency-converter",
-    "sonar.projectName": "currency_converter_prakhar",
-    "sonar.projectVersion": "1.0",
-    "sonar.sources": "src",
-    "sonar.sourceEncoding": "UTF-8"
-    }
+    npm install -g sonarqube-scanner
     ```
-3. Run the SonarCloud analysis:
+4. Run the SonarCloud analysis, replace the project key and the organization with the one in your project:
     ```sh
-    npx sonarqube-scanner 
+    sonar-scanner \
+    -Dsonar.organization=prakhar-currency-converter \
+    -Dsonar.projectKey=prakhar-currency-converter_project \
+    -Dsonar.sources=. \
+    -Dsonar.host.url=https://sonarcloud.io 
     ```
-4. Running this will generate a report on the sonar cloud dashboard in your project
+5. Running this will generate a report on the sonar cloud dashboard in your project
+
+6. Here is the link to the latest analysis: https://sonarcloud.io/dashboard?id=prakhar-currency-converter_project
 
 ## API Documentation
 
