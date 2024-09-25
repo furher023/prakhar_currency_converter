@@ -11,23 +11,19 @@ A currency converter API that converts bill of currency from one currency to ano
 ## Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/your-repo.git
-    cd your-repo
+    git clone https://github.com/furher023/prakhar_currency_converter.git
+    cd prakhar_currency_converter
     ```
 
 2. Install dependencies:
     ```sh
     npm install
-    # or
-    yarn install
     ```
 
 ## Running the Code
 To start the application, run:
 ```sh
-npm start
-# or
-yarn start
+npm run start:dev
 ```
 
 ## Running Tests
@@ -41,9 +37,7 @@ yarn test
 ## Checking Test Coverage
 To check the test coverage, run:
 ```sh
-npm run coverage
-# or
-yarn coverage
+npm run test:cov
 ```
 
 This will generate a coverage report in the `coverage` directory. Open `index.html` in a browser to view the detailed report.
@@ -54,122 +48,92 @@ This will generate a coverage report in the `coverage` directory. Open `index.ht
     ```sh
     export SONAR_TOKEN=your_sonarcloud_token
     ```
-
+4. Modify the sonar project details in package.json. Replace the projectKey and organization with your sonarcloud deatils.
+    ```sh
+    "sonar": {
+    "sonar.projectKey": "currency-converter_currency-converter",
+    "sonar.organization": "currency-converter",
+    "sonar.projectName": "currency_converter_prakhar",
+    "sonar.projectVersion": "1.0",
+    "sonar.sources": "src",
+    "sonar.sourceEncoding": "UTF-8"
+    }
+    ```
 3. Run the SonarCloud analysis:
     ```sh
-    npm run sonar
-    # or
-    yarn sonar
+    npx sonarqube-scanner 
     ```
+4. Running this will generate a report on the sonar cloud dashboard in your project
 
 ## API Documentation
 
 ### Authentication
-All API requests must include an API key for authentication. Include the API key in the `x-api-key` header.
+All API requests must include an API key for authentication. Include the API key in the `x-api-key` header. The API_KEY is present in the .env file.
 
-### Endpoint 1: `GET /api/resource`
-**Description:** Fetches a list of resources.
+### Endpoint 1: `POST /api/calculate`
+**Description:** Calculates the bill.
 
 **Request:**
 - Headers: 
+  - `Content-Type: application/json`
   - `x-api-key: <your_api_key>`
-- Query Parameters:
-  - `page` (optional): Page number for pagination.
-  - `limit` (optional): Number of items per page.
-
-**Response:**
-- Status: `200 OK`
 - Body:
   ```json
   {
-    "data": [
+    "userType": "EMPLOYEE",
+    "tenure": 5,
+    "billItems": [
       {
-        "id": "1",
-        "name": "Resource 1",
-        "description": "Description of Resource 1"
+        "name": "Laptop",
+        "category": "ELECTRONICS",
+        "totalPrice": 1000
       },
       {
-        "id": "2",
-        "name": "Resource 2",
-        "description": "Description of Resource 2"
+        "name": "Shirt",
+        "category": "CLOTHING",
+        "totalPrice": 50
       }
     ],
-    "pagination": {
-      "page": 1,
-      "limit": 10,
-      "total": 50
-    }
+    "originalCurrency": "USD",
+    "targetCurrency": "EUR",
+    "totalBillAmount": 1050
   }
   ```
-
-### Endpoint 2: `POST /api/resource`
-**Description:** Creates a new resource.
-
-**Request:**
-- Headers: 
-  - `Content-Type: application/json`
-  - `x-api-key: <your_api_key>`
-- Body:
-  ```json
-  {
-    "name": "New Resource",
-    "description": "Description of the new resource"
-  }
-  ```
-
-**Response:**
-- Status: `201 Created`
-- Body:
-  ```json
-  {
-    "id": "3",
-    "name": "New Resource",
-    "description": "Description of the new resource"
-  }
-  ```
-
-### Endpoint 3: `PUT /api/resource/:id`
-**Description:** Updates an existing resource.
-
-**Request:**
-- Headers: 
-  - `Content-Type: application/json`
-  - `x-api-key: <your_api_key>`
-- Body:
-  ```json
-  {
-    "name": "Updated Resource",
-    "description": "Updated description of the resource"
-  }
-  ```
+**Valid Input Values:**
+- `userType`: 
+  - `EMPLOYEE`
+  - `AFFILIATE`
+  - `CUSTOMER`
+- `billItems.category`: 
+  - `ELECTRONICS`
+  - `CLOTHING`
+  - `HOME_APPLIANCES`
+  - `BOOKS`
+  - `TOYS`
+  - `BEAUTY_PRODUCTS`
+  - `SPORTS_EQUIPMENT`
+  - `FURNITURE`
+  - `JEWELRY`
+  - `AUTOMOTIVE`
+  - `PET_SUPPLIES`
+  - `OFFICE_SUPPLIES`
+  - `GARDEN_SUPPLIES`
+  - `MUSIC_INSTRUMENTS`
+  - `VIDEO_GAMES`
+  - `HEALTH_PRODUCTS`
+  - `BABY_PRODUCTS`
+  - `GROCERIES`
+- `originalCurrency`: 
+  - `3 letter currency code`
+- `targetCurrency`: 
+  - `3 letter currency code`
 
 **Response:**
 - Status: `200 OK`
 - Body:
   ```json
   {
-    "id": "3",
-    "name": "Updated Resource",
-    "description": "Updated description of the resource"
+    "totalBillAmount": 950,
+    "currencyCode": "EUR"
   }
   ```
-
-### Endpoint 4: `DELETE /api/resource/:id`
-**Description:** Deletes a resource.
-
-**Request:**
-- Headers: 
-  - `x-api-key: <your_api_key>`
-
-**Response:**
-- Status: `204 No Content`
-
-## Contributing
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-```
-
-Make sure to replace placeholders like `yourusername`, `your-repo`, and `your_api_key` with actual values relevant to your project. Additionally, ensure that the scripts (`start`, `test`, `coverage`, `sonar`) are defined in your `package.json` file.
-```
