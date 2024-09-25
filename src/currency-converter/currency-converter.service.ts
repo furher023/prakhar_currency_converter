@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CurrencyCodes } from '../shared/enums/currency-codes.enums';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
+import { lastValueFrom } from 'rxjs';
 @Injectable()
 export class CurrencyConverterService {
     constructor(
@@ -21,7 +22,7 @@ export class CurrencyConverterService {
         }
         else{
             // call the exchange rate API
-            const response = await this.httpService.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${base}`).toPromise();
+            const response = await lastValueFrom(this.httpService.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${base}`));
             const conversionRate: number = response.data.conversion_rates[target];
             return conversionRate;
         }
