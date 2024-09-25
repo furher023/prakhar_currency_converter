@@ -30,8 +30,6 @@ npm run start:dev
 To run the tests, use:
 ```sh
 npm test
-# or
-yarn test
 ```
 
 ## Checking Test Coverage
