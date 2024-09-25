@@ -6,6 +6,7 @@ import { CurrencyConverterService } from '../currency-converter/currency-convert
 import { ConfigService } from '@nestjs/config';
 import { CalculateBillRequestDto } from './dto/calculate-billl-request-body.dto';
 import { CalculateBillResponseDto } from './dto/calculate-bill-response.dto';
+import { ApiKeyGuard } from '../auth/api-key.guard';
 
 describe('BillController', () => {
   
@@ -19,8 +20,8 @@ describe('BillController', () => {
       controllers: [BillController],
       providers: [BillService, CurrencyConverterService, ConfigService]
     })
-    // .overrideGuard(ApiKeyGuard)
-    // .useValue({ canActivate: () => true })
+    .overrideGuard(ApiKeyGuard)
+    .useValue({ canActivate: () => true })
     .compile();
 
     controller = module.get<BillController>(BillController);

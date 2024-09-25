@@ -2,7 +2,7 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { BillService } from './bill.service';
 import { CalculateBillRequestDto } from './dto/calculate-billl-request-body.dto';
 import { CalculateBillResponseDto } from './dto/calculate-bill-response.dto';
-import { ApiKeyGuard } from 'src/auth/api-key.guard';
+import { ApiKeyGuard } from '../auth/api-key.guard';
 
 @Controller('api')
 export class BillController {
