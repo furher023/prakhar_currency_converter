@@ -46,7 +46,7 @@ This will generate a coverage report in the `coverage` directory. Open `index.ht
     ```sh
     export SONAR_TOKEN=your_sonarcloud_token
     ```
-3. Install the SonarQube Scanner for npm:
+3. Install the SonarQube Scanner using npm:
     ```sh
     npm install -g sonarqube-scanner
     ```
