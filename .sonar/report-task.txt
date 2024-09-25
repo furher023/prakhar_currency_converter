@@ -1,7 +1,0 @@
-organization=prakhar-currency-converter
-projectKey=prakhar-currency-converter_project
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.56719
-dashboardUrl=https://sonarcloud.io/dashboard?id=prakhar-currency-converter_project
-ceTaskId=AZIoSG5j4Fw_crTmiW9w
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZIoSG5j4Fw_crTmiW9w
