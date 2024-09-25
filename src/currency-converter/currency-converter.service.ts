@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CurrencyCodes } from '../shared/enums/currency-codes.enums';
 import { ConfigService } from '@nestjs/config';
-
+import { HttpService } from '@nestjs/axios';
 @Injectable()
 export class CurrencyConverterService {
     constructor(
+        private readonly httpService: HttpService,
         private readonly configService: ConfigService 
     ) {}
     // converts the amount from a base to a target currency
@@ -20,6 +21,9 @@ export class CurrencyConverterService {
         }
         else{
             // call the exchange rate API
+            const response = await this.httpService.get(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${base}`).toPromise();
+            const conversionRate: number = response.data.conversion_rates[target];
+            return conversionRate;
         }
     }
 }
