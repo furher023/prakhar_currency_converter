@@ -9,6 +9,7 @@ import { CurrencyCodes } from '../shared/enums/currency-codes.enums';
 describe('CurrencyConverterService', () => {
   let service: CurrencyConverterService;
   let mockAxios: MockAdapter;
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -53,15 +54,14 @@ describe('CurrencyConverterService', () => {
     const fromCurrency = CurrencyCodes.USD;
     const toCurrency = CurrencyCodes.EUR;
     const exchangeRate = 0.85;
-
     mockAxios.onGet(`https://v6.exchangerate-api.com/v6/12345678/latest/${fromCurrency}`).reply(200, {
       conversion_rates: {
         [toCurrency]: exchangeRate,
       },
     });
-
     const result = await service.getConversionRate({ base: fromCurrency, target: toCurrency, apiKey: '12345678' });
     console.log(result);
     expect(result).toBe((exchangeRate));
   });
+  
 });

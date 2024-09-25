@@ -3,9 +3,9 @@ import { CalculateBillResponse } from './interfaces/calulate-bill-response.inter
 import { UserTypes } from '../shared/enums/user-types.enum';
 import { CurrencyCodes } from '../shared/enums/currency-codes.enums';
 import { BillItems } from './interfaces/bill-items.interface';
-import { CalculateBillRequestbody } from './interfaces/calculate-bill-request-body.interface';
 import { BillItemsCategory } from '../shared/enums/bill-items-category.enums';
 import { CurrencyConverterService } from '../currency-converter/currency-converter.service';
+import { CalculateBillRequestDto } from './dto/calculate-billl-request-body.dto';
 
 @Injectable()
 export class BillService {
@@ -13,16 +13,15 @@ export class BillService {
     constructor(private readonly currencyConverterService: CurrencyConverterService){}
 
     // calculates the bill and performs conversion of currency
-    public async calculate(billDetails: CalculateBillRequestbody): Promise<CalculateBillResponse>{
+    public async calculate(billDetails: CalculateBillRequestDto): Promise<CalculateBillResponse>{
         // getting the % discount depending on the user
         const discountPercent: number = this.getPercentDiscount(billDetails.userType, billDetails.tenure);
         // getting the % discount amount
-        const percentDiscountAmount: number = this.calculatePercentDiscountAmount(billDetails.billItems, this.getPercentDiscountExcludedCategries(), discountPercent);
-        // calculating bill after applying the % discount
-        let totalBillAmount: number = billDetails.totalBillAmount - percentDiscountAmount 
+        const percentDiscountAmount: number = this.calculatePercentDiscountAmount(billDetails.billItems, this.getPercentDiscountExcludedCategries(), discountPercent); 
         // getting the fixed discount
-        const fixedDiscountAmount: number = await this.getFixedDiscount(totalBillAmount, billDetails.originalCurrency);
-        // calculate total bill after the fixed discount
+        const fixedDiscountAmount: number = await this.getFixedDiscount(billDetails.totalBillAmount, billDetails.originalCurrency);
+         // calculate total bill after the discounts
+        let totalBillAmount: number = billDetails.totalBillAmount - percentDiscountAmount
         totalBillAmount -= fixedDiscountAmount;
         // convert the total bill amount to target currency
         totalBillAmount = await this.currencyConverterService.convertAmount({
