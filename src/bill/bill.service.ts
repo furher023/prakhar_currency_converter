@@ -16,12 +16,14 @@ export class BillService {
     public async calculate(billDetails: CalculateBillRequestbody): Promise<CalculateBillResponse>{
         // getting the % discount depending on the user
         const discountPercent: number = this.getPercentDiscount(billDetails.userType, billDetails.tenure);
-        // getting the % discount am
+        // getting the % discount amount
         const percentDiscountAmount: number = this.calculatePercentDiscountAmount(billDetails.billItems, this.getPercentDiscountExcludedCategries(), discountPercent);
+        // calculating bill after applying the % discount
+        let totalBillAmount: number = billDetails.totalBillAmount - percentDiscountAmount 
         // getting the fixed discount
-        const fixedDiscountAmount: number = await this.getFixedDiscount(billDetails.totalBillAmount, billDetails.originalCurrency);
-        // calculate total bill
-        let totalBillAmount: number = billDetails.totalBillAmount - percentDiscountAmount - fixedDiscountAmount;
+        const fixedDiscountAmount: number = await this.getFixedDiscount(totalBillAmount, billDetails.originalCurrency);
+        // calculate total bill after the fixed discount
+        totalBillAmount -= fixedDiscountAmount;
         // convert the total bill amount to target currency
         totalBillAmount = await this.currencyConverterService.convertAmount({
             amount: totalBillAmount,
@@ -29,7 +31,8 @@ export class BillService {
             target: billDetails.targetCurrency,
         });
         return {
-            totalBillAmount
+            totalBillAmount,
+            currencyCode: billDetails.targetCurrency
         }
     }
 
