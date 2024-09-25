@@ -4,7 +4,7 @@ import { BillItems } from "./bill-items.interface";
 
 export interface CalculateBillRequestbody {
     userType: UserTypes,
-    tenure: number,
+    tenure?: number,
     billItems: Array<BillItems>,
     originalCurrency: CurrencyCodes,
     targetCurrency: CurrencyCodes,
